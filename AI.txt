@@ -1,0 +1,65 @@
+# Set the expected duration of growth and maturity stages for each crop
+crop_info = {
+    "tomatoes": {
+        "expected_duration": 70,
+        "growth_stages": {
+            0: "Seed planted",
+            20: "Seedling emerged",
+            30: "First flowers appear",
+            40: "Fruit setting",
+            50: "Fruit ripening",
+            70: "Harvest ready"
+        }
+    },
+    "peppers": {
+        "expected_duration": 90,
+        "growth_stages": {
+            0: "Seed planted",
+            30: "Seedling emerged",
+            40: "First flowers appear",
+            50: "Fruit setting",
+            80: "Fruit ripening",
+            90: "Harvest ready"
+        }
+    },
+    "lettuce": {
+        "expected_duration": 50,
+        "growth_stages": {
+            0: "Seed planted",
+            10: "Seedling emerged",
+            20: "First leaves appear",
+            30: "Head forming",
+            50: "Harvest ready"
+        }
+    }
+}
+
+# Prompt the user to select a crop
+crop = input(f"Select a crop to check growth stage ({', '.join(crop_info.keys())}): ")
+
+# Check if the selected crop is valid
+if crop not in crop_info:
+    print("Invalid crop selection.")
+else:
+    # Get the expected duration and growth stages for the selected crop
+    expected_duration = crop_info[crop]["expected_duration"]
+    growth_stages = crop_info[crop]["growth_stages"]
+
+    # Prompt the user to enter the number of days the crop has been growing
+    days_grown = int(input("Enter the number of days the crop has been growing: "))
+
+    # Determine the current growth stage based on the number of days the crop has been growing
+    current_stage = None
+    for stage, description in growth_stages.items():
+        if days_grown >= stage:
+            current_stage = description
+
+    if current_stage is None:
+        print(f"The {crop} crop has not yet started growing.")
+    elif days_grown >= expected_duration:
+        print(f"The {crop} crop has reached its expected duration of growth.")
+        print(f"The current growth stage is: {current_stage}")
+    else:
+        remaining_days = expected_duration - days_grown
+        print(f"The {crop} crop is currently in the {current_stage} stage of growth.")
+        print(f"{remaining_days} days remaining until the expected duration of growth is reached.")
